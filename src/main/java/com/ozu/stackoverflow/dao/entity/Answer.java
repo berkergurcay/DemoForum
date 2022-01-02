@@ -1,27 +1,38 @@
 package com.ozu.stackoverflow.dao.entity;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "T_ANSWER")
 @Table(name = "T_ANSWER")
+@NoArgsConstructor
 public class Answer {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	private String answeredBy;
 	private String text;
-	private int voteCount;
+	private int voteCount = 1;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "PEOPLE_ID")
+	private People people;
+
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "QUESTION_ID")
 	private Question question;
 
-	@OneToMany(mappedBy = "answer")
+	@OneToMany(mappedBy = "answer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Comment> comments = new ArrayList<>();
 
+
+	public Answer(String text){
+		this.text = text;
+	}
 
 	public int getId() {
 		return id;
@@ -31,12 +42,12 @@ public class Answer {
 		this.id = id;
 	}
 
-	public String getAnsweredBy() {
-		return answeredBy;
+	public People getPeople() {
+		return people;
 	}
 
-	public void setAnsweredBy(String user) {
-		this.answeredBy = user;
+	public void setPeople(People people) {
+		this.people = people;
 	}
 
 	public String getText() {

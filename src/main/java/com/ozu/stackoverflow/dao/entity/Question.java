@@ -1,12 +1,17 @@
 package com.ozu.stackoverflow.dao.entity;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "T_QUESTION")
+@NoArgsConstructor
 public class Question {
 
 	@Id
@@ -15,23 +20,30 @@ public class Question {
 
 	private String title;
 	private String text;
-	private String askedBy;
 
-	private Date askedDate;
+	private Date askedDate = new Date();
 
 	private int answerCount;
+	private int voteCount = 1;
+	private int viewCount = 1;
 
-	private int voteCount;
-	private int viewCount;
 
-	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name = "PEOPLE_ID")
+	private People people;
+
+	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Comment> comments = new ArrayList<>();
 
-	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Answer> answers = new ArrayList<>();
 
-	@ManyToMany(mappedBy = "questions")
+	@ManyToMany(mappedBy = "questions", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Tag> tags = new ArrayList<>();
+
+	public Question(String title){
+		this.title = title;
+	}
 
 	public int getId() {
 		return id;
@@ -75,12 +87,12 @@ public class Question {
 		this.answerCount = answerCount;
 	}
 
-	public String getAskedBy() {
-		return askedBy;
+	public People getPeople() {
+		return people;
 	}
 
-	public void setAskedBy(String askedBy) {
-		this.askedBy = askedBy;
+	public void setPeople(People people) {
+		this.people = people;
 	}
 
 	public int getVoteCount() {
@@ -113,6 +125,7 @@ public class Question {
 
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
+		this.answerCount = answers.size();
 	}
 
 	public List<Tag> getTags() {

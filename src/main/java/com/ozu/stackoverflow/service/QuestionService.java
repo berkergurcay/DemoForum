@@ -10,4 +10,6 @@ public interface QuestionService {
 
 
 	QuestionDto getQuestion(int id);
+
+    List<QuestionDto> getQuestionsWithTag(String tag);
 }

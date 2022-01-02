@@ -1,22 +1,30 @@
 package com.ozu.stackoverflow.dao.entity;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "T_TAG")
+@NoArgsConstructor
 public class Tag {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	private String tag;
+	private String name;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "REL_TAG_QUESTION", joinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "ID"),
 			inverseJoinColumns = @JoinColumn(name = "QUESTION_ID", referencedColumnName = "ID"))
 	private List<Question> questions = new ArrayList<>();
+
+
+	public Tag(String name){
+		this.name = name;
+	}
 
 	public int getId() {
 		return id;
@@ -26,12 +34,12 @@ public class Tag {
 		this.id = id;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getName() {
+		return name;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setName(String tag) {
+		this.name = tag;
 	}
 
 	public List<Question> getQuestions() {

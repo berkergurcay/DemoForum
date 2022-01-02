@@ -1,6 +1,5 @@
 package com.ozu.stackoverflow.service.impl;
 
-import com.ozu.stackoverflow.dao.entity.Answer;
 import com.ozu.stackoverflow.dao.repository.AnswerRepository;
 import com.ozu.stackoverflow.model.AnswerDto;
 import com.ozu.stackoverflow.service.AnswerService;
@@ -29,6 +28,6 @@ public class AnswerServiceImpl implements AnswerService {
 
 	@Override
 	public AnswerDto getAnswer(int id) {
-		return answerMapper.toAnswerDto(answerRepository.getById(id));
+		return answerMapper.MAPPER.toAnswerDto(answerRepository.getById(id));
 	}
 }

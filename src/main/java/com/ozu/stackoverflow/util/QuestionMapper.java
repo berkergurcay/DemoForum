@@ -1,17 +1,14 @@
 package com.ozu.stackoverflow.util;
 
-import com.ozu.stackoverflow.dao.entity.Answer;
-import com.ozu.stackoverflow.dao.entity.Comment;
 import com.ozu.stackoverflow.dao.entity.Question;
-import com.ozu.stackoverflow.model.AnswerDto;
-import com.ozu.stackoverflow.model.CommentDto;
 import com.ozu.stackoverflow.model.QuestionDto;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {CommentMapper.class,PeopleMapper.class, TagMapper.class})
 public interface QuestionMapper {
 
 	QuestionDto toQuestionDto(Question question);
@@ -21,5 +18,6 @@ public interface QuestionMapper {
 	Question toQuestion(QuestionDto question);
 
 	List<Question> toQuestions(List<QuestionDto> questionDtos);
+
 
 }

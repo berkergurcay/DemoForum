@@ -8,8 +8,10 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class TagDto {
-	private int id;
-	String name;
-	List<QuestionDto> questions;
+public class PeopleDto {
+    private int id;
+    private String name;
+    private List<QuestionDto> questions;
+    private List<CommentDto> comments;
+    private List<AnswerDto> answers;
 }
