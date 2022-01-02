@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 class StackoverflowApplicationTests {
@@ -37,7 +39,7 @@ class StackoverflowApplicationTests {
 		tag.setName("spring");
 		tag.setQuestions(Arrays.asList(question));
 
-		question.setTags(Arrays.asList(tag));
+		question.setTags(List.of(tag));
 
 		questionRepository.save(question);
 		// tagRepository.save(tag);
@@ -57,7 +59,7 @@ class StackoverflowApplicationTests {
 		Question question = new Question("Spring boot update");
 		question.setText("Cant update spring boot version");
 		question.setPeople(people1);
-		question.setTags(Arrays.asList(tag1,tag2));
+		question.setTags(List.of(tag1,tag2));
 
 		people1.setQuestions(Arrays.asList(question));
 
@@ -102,7 +104,7 @@ class StackoverflowApplicationTests {
 		Tag tag = new Tag();
 		tag.setName("spring");
 
-		question.setTags(Arrays.asList(tag));
+		question.setTags(List.of(tag));
 		tag.setQuestions(Arrays.asList(question));
 
 		Answer answer = new Answer();

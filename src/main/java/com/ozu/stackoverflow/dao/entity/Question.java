@@ -16,19 +16,19 @@ public class Question {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	private String title;
 	private String text;
 
 	private Date askedDate = new Date();
 
-	private int answerCount;
-	private int voteCount = 1;
-	private int viewCount = 1;
+	private Integer answerCount;
+	private Integer voteCount = 1;
+	private Integer viewCount = 1;
 
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PEOPLE_ID")
 	private People people;
 
@@ -38,18 +38,18 @@ public class Question {
 	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Answer> answers = new ArrayList<>();
 
-	@ManyToMany(mappedBy = "questions", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "questions", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Tag> tags = new ArrayList<>();
 
 	public Question(String title){
 		this.title = title;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -69,8 +69,6 @@ public class Question {
 		this.text = text;
 	}
 
-
-
 	public Date getAskedDate() {
 		return askedDate;
 	}
@@ -79,11 +77,11 @@ public class Question {
 		this.askedDate = askedDate;
 	}
 
-	public int getAnswerCount() {
+	public Integer getAnswerCount() {
 		return answerCount;
 	}
 
-	public void setAnswerCount(int answerCount) {
+	public void setAnswerCount(Integer answerCount) {
 		this.answerCount = answerCount;
 	}
 
@@ -95,19 +93,19 @@ public class Question {
 		this.people = people;
 	}
 
-	public int getVoteCount() {
+	public Integer getVoteCount() {
 		return voteCount;
 	}
 
-	public void setVoteCount(int voteCount) {
+	public void setVoteCount(Integer voteCount) {
 		this.voteCount = voteCount;
 	}
 
-	public int getViewCount() {
+	public Integer getViewCount() {
 		return viewCount;
 	}
 
-	public void setViewCount(int viewCount) {
+	public void setViewCount(Integer viewCount) {
 		this.viewCount = viewCount;
 	}
 
@@ -115,6 +113,9 @@ public class Question {
 		return comments;
 	}
 
+	public void addComment(Comment comment){
+		this.comments.add(comment);
+	}
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
@@ -126,6 +127,14 @@ public class Question {
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 		this.answerCount = answers.size();
+	}
+
+	public void upvote(){
+
+		if(this.voteCount!= null)
+			this.voteCount++;
+		else
+			this.voteCount = 1;
 	}
 
 	public List<Tag> getTags() {

@@ -10,9 +10,11 @@ import javax.persistence.*;
 public class Comment {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	private String text;
+
+	private Integer voteCount;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "PEOPLE_ID")
@@ -30,11 +32,11 @@ public class Comment {
 		this.text = text;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -68,5 +70,18 @@ public class Comment {
 
 	public void setAnswer(Answer answer) {
 		this.answer = answer;
+	}
+
+	public Integer getVoteCount() {
+		return voteCount;
+	}
+	public void increaseVoteCount(){
+		if(this.voteCount != null)
+			this.voteCount++;
+		else
+			this.voteCount = 1;
+	}
+	public void setVoteCount(Integer voteCount) {
+		this.voteCount = voteCount;
 	}
 }

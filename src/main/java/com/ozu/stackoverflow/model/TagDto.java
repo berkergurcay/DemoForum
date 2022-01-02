@@ -5,11 +5,26 @@ import lombok.Data;
 
 import java.util.List;
 
-@Data
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 public class TagDto {
-	private int id;
+	private Integer id;
 	String name;
-	List<QuestionDto> questions;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

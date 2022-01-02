@@ -12,10 +12,10 @@ import java.util.List;
 public class Answer {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	private String text;
-	private int voteCount = 1;
+	private Integer voteCount = 1;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "PEOPLE_ID")
@@ -34,11 +34,11 @@ public class Answer {
 		this.text = text;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -58,11 +58,11 @@ public class Answer {
 		this.text = text;
 	}
 
-	public int getVoteCount() {
+	public Integer getVoteCount() {
 		return voteCount;
 	}
 
-	public void setVoteCount(int voteCount) {
+	public void setVoteCount(Integer voteCount) {
 		this.voteCount = voteCount;
 	}
 
@@ -76,6 +76,17 @@ public class Answer {
 
 	public List<Comment> getComments() {
 		return comments;
+	}
+
+	public void upvote(){
+		if(this.voteCount != null)
+			this.voteCount++;
+		else
+			this.voteCount = 1;
+	}
+
+	public void addComment(Comment comment){
+		this.comments.add(comment);
 	}
 
 	public void setComments(List<Comment> comments) {

@@ -13,7 +13,7 @@ public class Tag {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	private String name;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -26,11 +26,11 @@ public class Tag {
 		this.name = name;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

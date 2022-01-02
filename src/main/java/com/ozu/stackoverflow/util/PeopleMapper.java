@@ -3,19 +3,19 @@ package com.ozu.stackoverflow.util;
 import com.ozu.stackoverflow.dao.entity.People;
 import com.ozu.stackoverflow.model.PeopleDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {CommentMapper.class,QuestionMapper.class})
+@Mapper(componentModel = "spring")
 public interface PeopleMapper {
+    PeopleMapper MAPPER = Mappers.getMapper(PeopleMapper.class);
 
     People toPeople(PeopleDto peopleDto);
 
-    List<People> toPeoples(List<PeopleDto> peopleDtos);
-
     PeopleDto toPeopleDto(People people);
 
-    List<PeopleDto> toPeopleDtos(List<People> peoples);
+    List<People> toPeopleList(List<People> peopleList);
 
-
+    List<PeopleDto> toPeopleDtoList(List<PeopleDto> peopleDtos);
 }

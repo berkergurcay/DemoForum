@@ -2,22 +2,26 @@ package com.ozu.stackoverflow.util;
 
 import com.ozu.stackoverflow.dao.entity.Question;
 import com.ozu.stackoverflow.model.QuestionDto;
-import org.mapstruct.Context;
 import org.mapstruct.Mapper;
-
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {CommentMapper.class,PeopleMapper.class, TagMapper.class})
+@Mapper(componentModel = "spring")
 public interface QuestionMapper {
 
-	QuestionDto toQuestionDto(Question question);
+    QuestionMapper MAPPER = Mappers.getMapper(QuestionMapper.class);
 
-	List<QuestionDto> toQuestionDtos(List<Question> questions);
+    @Mapping(target = "people.name", source = "person")
+    Question toQuestion(QuestionDto questionDto);
 
-	Question toQuestion(QuestionDto question);
+    @Mapping(target = "person", source = "people.name")
+    QuestionDto toQuestionDto(Question question);
 
-	List<Question> toQuestions(List<QuestionDto> questionDtos);
+
+    List<Question> toQuestionList(List<QuestionDto> questionDto);
 
 
+    List<QuestionDto> toQuestionDtoList(List<Question> questions);
 }
